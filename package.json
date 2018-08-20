@@ -1,7 +1,7 @@
 {
-  "name": "node-js-sample",
-  "version": "0.2.0",
-  "description": "A sample Node.js app using Express 4",
+  "name": "secret-santa",
+  "version": "1.0.0",
+  "description": "Secret Santa App",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
@@ -14,16 +14,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/heroku/node-js-sample"
+    "url": "https://github.com/aawobdev/le-blanc"
   },
   "keywords": [
     "node",
     "heroku",
     "express"
   ],
-  "author": "Mark Pundsack",
+  "author": "Alistair Crawford",
   "contributors": [
-    "Zeke Sikelianos <zeke@sikelianos.com> (http://zeke.sikelianos.com)"
+    "Alistair Crawford <alistair@wobdev.co.uk> (http://wobdev.co.uk)"
   ],
   "license": "MIT"
 }
