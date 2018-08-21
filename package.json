@@ -9,7 +9,9 @@
   "dependencies": {
     "body-parser": "*",
     "ejs": "*",
-    "express": "*"
+    "express": "*",
+    "express-validator": "*",
+    "mongojs": "*"
   },
   "engines": {
     "node": "*"
