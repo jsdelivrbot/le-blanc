@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/aawobdev/le-blanc"
+    "url": "git+https://github.com/aawobdev/le-blanc.git"
   },
   "keywords": [
     "node",
@@ -25,5 +25,9 @@
   "contributors": [
     "Alistair Crawford <alistair@wobdev.co.uk> (http://wobdev.co.uk)"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aawobdev/le-blanc/issues"
+  },
+  "homepage": "https://github.com/aawobdev/le-blanc#readme"
 }
