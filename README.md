@@ -1,6 +1,8 @@
 # le-blanc
 
-Very basic Secret-Santa application
+Very basic Secret-Santa application to use email lists to randomly pair secret santa's.
+
+1. Do not draw secret santa drawn in previous draw
 
 
 ## Documentation
