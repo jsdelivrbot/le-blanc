@@ -2,8 +2,10 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 var {check,validationResult} = require('express-validator/check');
+
+// Mongo DB
 var mongojs = require('mongojs');
-var db = mongojs('secret-santa', ['users']);
+var db = mongojs('secret-santa', ['users']);//mongojs(ConnectionString, [Collections]);
 
 var app = express();
 
@@ -15,15 +17,16 @@ app.set('views',path.join(__dirname,'views'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 
-// Set static path
+// Set static path for public
 app.use(express.static(__dirname + '/public'));
 
+// Main GET
 app.get('/', function(req, res) {
   // find everything
   db.users.find(function (err, users) {
     console.log(users);
     res.render('index',{
-      title: 'Customers',
+      title: 'Users',
       users:users
     });
   })
