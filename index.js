@@ -5,7 +5,8 @@ var {check,validationResult} = require('express-validator/check');
 
 // Mongo DB
 var mongojs = require('mongojs');
-var connectionString = 'mongodb://heroku_admin:S@vingTheW3b@ds125362.mlab.com:25362/heroku_ntdmwp6n';
+var connectionString = 'mongodb://heroku_admin:Password1@ds125362.mlab.com:25362/heroku_ntdmwp6n';
+//var connectionString = 'mongodb://ds125362.mlab.com:25362/heroku_ntdmwp6n';
 var db = mongojs(connectionString, ['users']);//mongojs(ConnectionString, [Collections]);
 
 var app = express();
