@@ -13,12 +13,20 @@
 
         <main role="main" class="inner cover">
                  <h1 class="cover-heading"><%= title %></h1>
-                 <p class="lead"> Secret Santa is a fun Christmas web app that allows you to register your whole friends, family or work group. You will then be able to prompt a random draw with private email notification </p>
 
-                 <div class="btn-group" role="group">
-                   <a href="/register/" class="btn btn-lg btn-primary">Register</a>
-                   <a href="/login/" class="btn btn-lg btn-default">Log In</a>
-                 </div>
+                 <div class="list-group">
+                    <% users.forEach(function(user){ %>
+                   <a class="list-group-item list-group-item-action" href="/users/<%=user._id%>"><%= user.first_name %> (<%= user.email %>)
+                   </a>
+
+
+                   <div class="btn-group" role="group">
+                     <a href="/users/<%=user._id%>" class="btn btn btn-default">Edit</a>
+                     <a href="#" id="deleteUser" class="btn btn btn-danger" data-id="<%=user._id%>">Delete</a>
+                   </div>
+                     <% }) %>
+                </div>
+
                  <%if (modal) { %>
                    <div class="alert alert-success" role="alert">
                      <%=modalText%>

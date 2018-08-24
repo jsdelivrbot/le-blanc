@@ -25,21 +25,37 @@ app.use(express.static(__dirname + '/public'));
 
 // Main GET
 app.get('/', function(req, res) {
-  // find everything
-  db.users.find(function (err, users) {
-    console.log(users);
-    res.render('index',{
-      title: 'Users',
-      users:users
+  res.render('index',{
+    title: 'Secret Santa',
+    modal:false
+  });
+});
+
+// Register GET
+app.get('/register', function(req, res) {
+  res.render('register',{
+    title: 'Register'
+  });
+});
+
+// Main GET
+app.get('/users', function(req, res) {
+
+  db.users.find(function(err,docs){
+    res.render('users',{
+      title: 'Secret Santa',
+      users:docs,
+      modal:false
     });
   })
+
+
 });
 
 app.post('/users/add', [
   // email must be email
   check('email').not().isEmpty(),
   check('first_name').not().isEmpty(),
-  check('last_name').not().isEmpty(),
   check('email').isEmail()
 ],(req,res) => {
   const errors = validationResult(req);
@@ -48,16 +64,19 @@ app.post('/users/add', [
   }
   var newUser = {
     first_name : req.body.first_name,
-    last_name : req.body.last_name,
     email : req.body.email
   }
   db.users.insert(newUser, function(err,result){
     if (err){
       console.log(err);
     }
-    res.redirect('/');
+    res.render('index',{
+      title: 'Secret Santa',
+      modal:true,
+      modalText:'Successfully registered, now you can login!'
+    });
   });
-  console.log(newUser);
+  //console.log(newUser);
 
 });
 
@@ -66,7 +85,14 @@ app.delete('/users/delete/:id',function(req,res){
     if(err){
       console.log(err);
     }
-    res.redirect('/');
+    db.users.find(function(err,docs){
+      res.render('users',{
+        title: 'Secret Santa',
+        users:docs,
+        modal:true,
+        modalText:'Successfully deleted!'
+      });
+    })
   });
 });
 

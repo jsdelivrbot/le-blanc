@@ -1,5 +1,7 @@
 $(document).ready(function(){
   $('.deleteUser').on('click',deleteUser);
+  $('#deleteUser').on('click',deleteUser);
+  $('#myModal').modal('show');
 });
 
 function deleteUser(){
@@ -10,9 +12,10 @@ if(confirmation){
     type:'DELETE',
     url:'/users/delete/'+$(this).data('id')
   }).done(function(response){
-    window.location.replace('/');
-  });
-  window.location.replace('/');
+    window.location.replace('/users');
+  })
+  ;
+  window.location.replace('/users');
 } else {
   return false;
 }
