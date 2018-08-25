@@ -64,7 +64,8 @@ app.post('/users/add', [
   }
   var newUser = {
     first_name : req.body.first_name,
-    email : req.body.email
+    email : req.body.email,
+    approved: false
   }
   db.users.insert(newUser, function(err,result){
     if (err){
