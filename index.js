@@ -169,32 +169,32 @@ app.post('/draws/update', [
   }
 
   drawDb.draws.update(
-   { _id: ObjectId(req.body.id) },
-   {
-     $set: { "name":  req.body.name}
-   },function(err, result) {
+    { _id: ObjectId(req.body.id) },
+    {
+      $set: { "name":  req.body.name}
+    },function(err, result) {
       if (err){
-          console.warn(err.message);  // returns error if no matching object found
+        console.warn(err.message);  // returns error if no matching object found
       }else{
-          console.dir(result);
+        console.dir(result);
       }
-  });
+    });
 
     /* drawDb.draws.findOne({_id: ObjectId(req.body.id)}, function(err,doc){
-       if(err){
-         console.log(err);
-       }
-       console.log(req.session);
-         res.render('draw',{
-           title: 'Draw Details',
-           draw:doc,
-           modal:true,
-           modalText:'Successfully updated',
-           operation:'update'
-         });
-     });*/
+    if(err){
+    console.log(err);
+  }
+  console.log(req.session);
+  res.render('draw',{
+  title: 'Draw Details',
+  draw:doc,
+  modal:true,
+  modalText:'Successfully updated',
+  operation:'update'
+});
+});*/
 
-     res.redirect('../draws');
+res.redirect('../draws');
 
 });
 
@@ -221,12 +221,12 @@ app.get('/draws/:id',function(req,res){
     if(err){
       console.log(err);
     }
-      res.render('draw',{
-        title: 'Draw Details',
-        draw:doc,
-        operation:'update',
-        modal:false,
-      });
+    res.render('draw',{
+      title: 'Draw Details',
+      draw:doc,
+      operation:'update',
+      modal:false,
+    });
   });
 });
 

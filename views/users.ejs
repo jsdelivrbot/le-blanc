@@ -1,43 +1,43 @@
 <html>
-  <head>
-    <% include partials/head %>
-  </head>
+<head>
+  <% include partials/head %>
+</head>
 
-  <body class="text-center">
-    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-        <header class="masthead mb-auto">
-            <% include partials/header %>
-        </header>
+<body class="text-center">
+  <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+    <header class="masthead mb-auto">
+      <% include partials/header %>
+    </header>
 
-        <main role="main" class="inner cover">
-                 <h1 class="cover-heading"><%= title %></h1>
+    <main role="main" class="inner cover">
+      <h1 class="cover-heading"><%= title %></h1>
 
-                 <div class="list-group">
-                    <% users.forEach(function(user){ %>
-                   <a class="list-group-item list-group-item-action" href="/users/<%=user._id%>"><%= user.first_name %> (<%= user.email %>)
-                   </a>
+      <div class="list-group">
+        <% users.forEach(function(user){ %>
+          <a class="list-group-item list-group-item-action" href="/users/<%=user._id%>"><%= user.first_name %> (<%= user.email %>)
+          </a>
 
 
-                   <div class="btn-group" role="group">
-                     <a href="/users/<%=user._id%>" class="btn btn btn-default">Edit</a>
-                     <a href="#" id="deleteUser" class="btn btn btn-danger" data-id="<%=user._id%>">Delete</a>
-                   </div>
-                     <% }) %>
-                </div>
+          <div class="btn-group" role="group">
+            <a href="/users/<%=user._id%>" class="btn btn btn-default">Edit</a>
+            <a href="#" id="deleteUser" class="btn btn btn-danger" data-id="<%=user._id%>">Delete</a>
+          </div>
+          <% }) %>
+        </div>
 
-                 <%if (modal) { %>
-                   <div class="alert alert-success" role="alert">
-                     <%=modalText%>
-                   </div>
-                <% } %>
+        <%if (modal) { %>
+          <div class="alert alert-success" role="alert">
+            <%=modalText%>
+          </div>
+          <% } %>
         </main>
 
 
         <footer class="mastfoot mt-auto">
-        <div class="inner">
-          <% include partials/footer %>
-        </div>
-      </footer>
-    </div>
-  </body>
-</html>
+          <div class="inner">
+            <% include partials/footer %>
+          </div>
+        </footer>
+      </div>
+    </body>
+    </html>

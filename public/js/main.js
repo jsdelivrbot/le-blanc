@@ -7,33 +7,33 @@ $(document).ready(function(){
 function deleteUser(){
   var confirmation = confirm('Are you Sure?');
 
-if(confirmation){
-  $.ajax({
-    type:'DELETE',
-    url:'/users/delete/'+$(this).data('id')
-  }).done(function(response){
+  if(confirmation){
+    $.ajax({
+      type:'DELETE',
+      url:'/users/delete/'+$(this).data('id')
+    }).done(function(response){
+      window.location.replace('/users');
+    })
+    ;
     window.location.replace('/users');
-  })
-  ;
-  window.location.replace('/users');
-} else {
-  return false;
-}
+  } else {
+    return false;
+  }
 }
 
 function deleteDraw(){
   var confirmation = confirm('Are you Sure?');
 
-if(confirmation){
-  $.ajax({
-    type:'DELETE',
-    url:'/draws/delete/'+$(this).data('id')
-  }).done(function(response){
+  if(confirmation){
+    $.ajax({
+      type:'DELETE',
+      url:'/draws/delete/'+$(this).data('id')
+    }).done(function(response){
+      window.location.replace('/draws/');
+    })
+    ;
     window.location.replace('/draws/');
-  })
-  ;
-  window.location.replace('/draws/');
-} else {
-  return false;
-}
+  } else {
+    return false;
+  }
 }
