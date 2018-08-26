@@ -1,15 +1,17 @@
+// ========================================== Setup =====================================================
+// run vars
 var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 var {check,validationResult} = require('express-validator/check');
 
-// Mongo DB
+// Mongo userDb
 var mongojs = require('mongojs');
-var connectionString = 'mongodb://heroku_admin:Password1@ds125362.mlab.com:25362/heroku_ntdmwp6n';
-//var connectionString = 'mongodb://ds125362.mlab.com:25362/heroku_ntdmwp6n';
-var db = mongojs(connectionString, ['users']);//mongojs(ConnectionString, [Collections]);
+var connectionString = 'mongouserDb://heroku_admin:Password1@ds125362.mlab.com:25362/heroku_ntdmwp6n'; // TODO Make this an env config item
+var userDb = mongojs(connectionString, ['users']);//mongojs(ConnectionString, [Collections]);
 var ObjectId = mongojs.ObjectId;
 
+// general init
 var app = express();
 
 // View engines
@@ -23,7 +25,11 @@ app.use(bodyParser.urlencoded({extended:false}));
 // Set static path for public
 app.use(express.static(__dirname + '/public'));
 
-// Main GET
+
+// ======================================================================================================
+// Main
+
+// HOME|GET
 app.get('/', function(req, res) {
   res.render('index',{
     title: 'Secret Santa',
@@ -31,17 +37,17 @@ app.get('/', function(req, res) {
   });
 });
 
-// Register GET
+// REGISTER|GET
 app.get('/register', function(req, res) {
   res.render('register',{
     title: 'Register'
   });
 });
 
-// Main GET
+// USERS|GET
 app.get('/users', function(req, res) {
 
-  db.users.find(function(err,docs){
+  userDb.users.find(function(err,docs){
     res.render('users',{
       title: 'Secret Santa',
       users:docs,
@@ -52,6 +58,7 @@ app.get('/users', function(req, res) {
 
 });
 
+// USERS|ADD
 app.post('/users/add', [
   // email must be email
   check('email').not().isEmpty(),
@@ -67,7 +74,7 @@ app.post('/users/add', [
     email : req.body.email,
     approved: false
   }
-  db.users.insert(newUser, function(err,result){
+  userDb.users.insert(newUser, function(err,result){
     if (err){
       console.log(err);
     }
@@ -77,16 +84,15 @@ app.post('/users/add', [
       modalText:'Successfully registered, now you can login!'
     });
   });
-  //console.log(newUser);
-
 });
 
+// USERS|DELETE
 app.delete('/users/delete/:id',function(req,res){
-  db.users.remove({_id: ObjectId(req.params.id)}, function(err,result){
+  userDb.users.remove({_id: ObjectId(req.params.id)}, function(err,result){
     if(err){
       console.log(err);
     }
-    db.users.find(function(err,docs){
+    userDb.users.find(function(err,docs){
       res.render('users',{
         title: 'Secret Santa',
         users:docs,
@@ -97,7 +103,7 @@ app.delete('/users/delete/:id',function(req,res){
   });
 });
 
-// Finally listen on available port
+// FINAL
 app.set('port', (process.env.PORT || 5000));
 app.listen(app.get('port'), function() {
   console.log("Node app is running at localhost:" + app.get('port'))

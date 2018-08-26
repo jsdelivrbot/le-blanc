@@ -1,7 +1,6 @@
 $(document).ready(function(){
   $('.deleteUser').on('click',deleteUser);
   $('#deleteUser').on('click',deleteUser);
-  $('#myModal').modal('show');
 });
 
 function deleteUser(){
