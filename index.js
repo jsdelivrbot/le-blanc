@@ -13,7 +13,7 @@ var connectionString = process.env.MONGODB_URI; // TODO Make this an env config 
 // Users
 var userDb = mongojs(connectionString, ['users']);//mongojs(ConnectionString, [Collections]);
 // Draws
-//var drawDb = mongojs(connectionString, ['draws']);
+var drawDb = mongojs(connectionString, ['draws']);
 
 var ObjectId = mongojs.ObjectId;
 
@@ -55,7 +55,7 @@ app.get('/users', function(req, res) {
 
   userDb.users.find(function(err,docs){
     res.render('users',{
-      title: 'Secret Santa',
+      title: 'Users',
       users:docs,
       modal:false
     });
@@ -98,12 +98,135 @@ app.delete('/users/delete/:id',function(req,res){
     }
     userDb.users.find(function(err,docs){
       res.render('users',{
-        title: 'Secret Santa',
+        title: 'Users',
         users:docs,
         modal:true,
         modalText:'Successfully deleted!'
       });
     })
+  });
+});
+
+// DRAWS|GET
+app.get('/draws', function(req, res) {
+
+  drawDb.draws.find(function(err,docs){
+    res.render('draws',{
+      title: 'Draws',
+      draws:docs,
+      modal:false
+    });
+  })
+});
+
+// DRAWS NEW|GET
+app.get('/draws/new', function(req, res) {
+  var emptyDraw = {
+    _id:null,
+    name:''
+  };
+  res.render('draw',{
+    title: 'Draw Details',
+    draw:emptyDraw,
+    operation:'add',
+    modal:false,
+  });
+});
+
+// DRAWS|ADD
+app.post('/draws/add', [
+  check('name').not().isEmpty()
+],(req,res) => {
+  //console.log(req);
+  const errors = validationResult(req);
+  if (!errors.isEmpty()){
+    return res.status(422).json({errors:errors.array()});
+  }
+  var newDraw = {
+    name : req.body.name,
+    active: false
+  }
+  drawDb.draws.insert(newDraw, function(err,result){
+    if (err){
+      console.log(err);
+    }
+    res.render('index',{
+      title: 'Secret Santa',
+      modal:true,
+      modalText:'Successfully added'
+    });
+  });
+});
+
+// DRAWS|UPDATE
+app.post('/draws/update', [
+  check('name').not().isEmpty()
+],(req,res) => {
+  //console.log(req);
+  const errors = validationResult(req);
+  if (!errors.isEmpty()){
+    return res.status(422).json({errors:errors.array()});
+  }
+
+  drawDb.draws.update(
+   { _id: ObjectId(req.body.id) },
+   {
+     $set: { "name":  req.body.name}
+   },function(err, result) {
+      if (err){
+          console.warn(err.message);  // returns error if no matching object found
+      }else{
+          console.dir(result);
+      }
+  });
+
+    /* drawDb.draws.findOne({_id: ObjectId(req.body.id)}, function(err,doc){
+       if(err){
+         console.log(err);
+       }
+       console.log(req.session);
+         res.render('draw',{
+           title: 'Draw Details',
+           draw:doc,
+           modal:true,
+           modalText:'Successfully updated',
+           operation:'update'
+         });
+     });*/
+
+     res.redirect('../draws');
+
+});
+
+// DRAWS|DELETE
+app.delete('/draws/delete/:id',function(req,res){
+  drawDb.draws.remove({_id: ObjectId(req.params.id)}, function(err,result){
+    if(err){
+      console.log(err);
+    }
+    drawDb.draws.find(function(err,docs){
+      res.render('draws',{
+        title: 'Draws',
+        draws:docs,
+        modal:true,
+        modalText:'Successfully deleted!'
+      });
+    });
+  });
+});
+
+// DRAWS|EDIT
+app.get('/draws/:id',function(req,res){
+  drawDb.draws.findOne({_id: ObjectId(req.params.id)}, function(err,doc){
+    if(err){
+      console.log(err);
+    }
+      res.render('draw',{
+        title: 'Draw Details',
+        draw:doc,
+        operation:'update',
+        modal:false,
+      });
   });
 });
 

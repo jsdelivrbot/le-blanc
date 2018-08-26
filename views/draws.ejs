@@ -9,18 +9,22 @@
             <% include partials/header %>
         </header>
 
+
+
         <main role="main" class="inner cover">
                  <h1 class="cover-heading"><%= title %></h1>
 
+                 <a href="/draws/new" class="btn btn-lg btn-primary">Add</a>
+
                  <div class="list-group">
-                    <% users.forEach(function(user){ %>
-                   <a class="list-group-item list-group-item-action" href="/users/<%=user._id%>"><%= user.first_name %> (<%= user.email %>)
-                   </a>
+                    <% draws.forEach(function(draw){ %>
+                   <div class="list-group-item list-group-item-action" ><%= draw.name %>
+                   </div>
 
 
                    <div class="btn-group" role="group">
-                     <a href="/users/<%=user._id%>" class="btn btn btn-default">Edit</a>
-                     <a href="#" id="deleteUser" class="btn btn btn-danger" data-id="<%=user._id%>">Delete</a>
+                     <a href="/draws/<%=draw._id%>" class="btn btn btn-default">Edit</a>
+                     <a href="" id="deleteDraw" class="btn btn btn-danger" data-id="<%=draw._id%>">Delete</a>
                    </div>
                      <% }) %>
                 </div>
