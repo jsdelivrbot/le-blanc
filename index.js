@@ -7,8 +7,13 @@ var {check,validationResult} = require('express-validator/check');
 
 // Mongo userDb
 var mongojs = require('mongojs');
-var connectionString = 'mongouserDb://heroku_admin:Password1@ds125362.mlab.com:25362/heroku_ntdmwp6n'; // TODO Make this an env config item
+var connectionString = process.env.MONGODB_URI; // TODO Make this an env config item
+
+// Users
 var userDb = mongojs(connectionString, ['users']);//mongojs(ConnectionString, [Collections]);
+// Draws
+//var drawDb = mongojs(connectionString, ['draws']);
+
 var ObjectId = mongojs.ObjectId;
 
 // general init
@@ -54,8 +59,6 @@ app.get('/users', function(req, res) {
       modal:false
     });
   })
-
-
 });
 
 // USERS|ADD
@@ -81,7 +84,7 @@ app.post('/users/add', [
     res.render('index',{
       title: 'Secret Santa',
       modal:true,
-      modalText:'Successfully registered, now you can login!'
+      modalText:'Successfully registered, please check your email for a unique magic link!'
     });
   });
 });
