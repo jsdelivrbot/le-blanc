@@ -1,7 +1,7 @@
 $(document).ready(function(){
   //$('.deleteUser').on('click',deleteUser);
-  $('#deleteUser').on('click',deleteUser);
-  $('#deleteDraw').on('click',deleteDraw);
+  $('.deleteUser').on('click',deleteUser);
+  $('.deleteDraw').on('click',deleteDraw);
 });
 
 function deleteUser(){
