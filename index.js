@@ -219,15 +219,53 @@ app.get('/draws/:id',function(req,res){
 // DRAWS/MATCHES | GET
 // DRAWS|GET
 app.get('/draw/matches/:id', function(req, res) {
-    res.send('TBD');
+  // var currentDraw = null;
+  // drawDb.draws.findOne({_id: ObjectId(req.params.id)}, function(err,doc){
+  //   if(err){
+  //     console.log(err);
+  //   }
+  //   else{
+  //     currentDraw = doc;
+  //   }
+  // });
+  //
+  //   var currentMatches = currentDraw.matches;
+  //
+  //     res.render('matches',{
+  //       title: 'Matches for :' + currentDraw.name,
+  //       draw:currentDraw,
+  //       matches:currentMatches,
+  //       modal:false
+  //     });
+
+var draw = {
+   _id : 123,
+   name : "Test",
+   active : false }
+
+var matches = [{
+     _id : 123,
+  fromId:'1234',
+  fromName:'From',
+  toId:'5678',
+  toName: 'To'
+},
+{
+     _id : 456,
+  fromId:'0002',
+  fromName:'F',
+  toId:'1113',
+  toName: 'T'
+}]
+
+  res.render('matches',{
+    title: 'Matches for :' + draw.name,
+    draw:draw,
+    matches:matches,
+    modal:false
+  })
 });
-  // drawDb.draws.find(function(err,docs){
-  //   res.render('draws',{
-  //     title: 'Draws',
-  //     draws:docs,
-  //     modal:false
-  //   });
-  // })
+
 
 
 

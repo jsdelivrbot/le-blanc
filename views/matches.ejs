@@ -18,12 +18,12 @@
 
       <div class="list-group">
         <% matches.forEach(function(match){ %>
-          <div class="list-group-item list-group-item-action" ><%= match.from %> -> <%= match.to %>
+          <div class="list-group-item list-group-item-action" ><%= match.fromName %> -> <%= match.toName %>
           </div>
 
 
           <div class="btn-group" role="group">
-            <a href="../matches/<%=match._id%>" class="btn btn btn-default">Edit</a>
+            <a href="/match/<%=match._id%>" class="btn btn btn-default">Edit</a>
             <a href="" class="deleteMatch btn btn btn-danger" data-id="<%=match._id%>">Delete</a>
           </div>
           <% }) %>
