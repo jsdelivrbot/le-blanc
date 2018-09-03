@@ -180,20 +180,6 @@ app.post('/draws/update', [
       }
     });
 
-    /* drawDb.draws.findOne({_id: ObjectId(req.body.id)}, function(err,doc){
-    if(err){
-    console.log(err);
-  }
-  console.log(req.session);
-  res.render('draw',{
-  title: 'Draw Details',
-  draw:doc,
-  modal:true,
-  modalText:'Successfully updated',
-  operation:'update'
-});
-});*/
-
 res.redirect('../draws');
 
 });
@@ -229,6 +215,22 @@ app.get('/draws/:id',function(req,res){
     });
   });
 });
+
+// DRAWS/MATCHES | GET
+// DRAWS|GET
+app.get('/draw/matches/:id', function(req, res) {
+    res.send('TBD');
+});
+  // drawDb.draws.find(function(err,docs){
+  //   res.render('draws',{
+  //     title: 'Draws',
+  //     draws:docs,
+  //     modal:false
+  //   });
+  // })
+
+
+
 
 // FINAL
 app.set('port', (process.env.PORT || 5000));

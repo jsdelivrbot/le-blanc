@@ -10,22 +10,22 @@
     </header>
 
     <main role="main" class="inner cover">
-      <h1 class="cover-heading"><%= title %></h1>
-      <p class="lead"> Secret Santa is a fun Christmas web app that allows you to register your whole friends, family or work group. You will then be able to prompt a random draw with private email notification </p>
 
-      <div class="btn-group" role="group">
-        <a href="/register/" class="btn btn-lg btn-primary">Register</a>
-        <a href="/draws/send" class="btn btn-lg btn-default">My Draws</a>
-        <!--<a href="/login/" class="btn btn-lg btn-default">Log In</a> TODO Create login -->
-      </div>
+      <form class="form-signin" method="POST" action="/users/<%=operation%>">
+        <h1 class="h3 mb-3 font-weight-normal"><%= title %></h1>
+        <label for="inputName" class="sr-only">Name</label>
+        <input type="text" value="<%=draw.name%>" id="inputName" name="name" class="form-control" placeholder="Name"  required autofocus>
+        <input type="hidden" value="<%=draw._id%>" id="inputId" name="id" class="form-control">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
+      </form>
+
       <%if (modal) { %>
         <div class="alert alert-success" role="alert">
           <%=modalText%>
         </div>
         <% } %>
+
       </main>
-
-
       <footer class="mastfoot mt-auto">
         <div class="inner">
           <% include partials/footer %>
