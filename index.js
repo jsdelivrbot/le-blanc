@@ -219,51 +219,72 @@ app.get('/draws/:id',function(req,res){
 // DRAWS/MATCHES | GET
 // DRAWS|GET
 app.get('/draw/matches/:id', function(req, res) {
-  // var currentDraw = null;
-  // drawDb.draws.findOne({_id: ObjectId(req.params.id)}, function(err,doc){
-  //   if(err){
-  //     console.log(err);
-  //   }
-  //   else{
-  //     currentDraw = doc;
-  //   }
-  // });
-  //
-  //   var currentMatches = currentDraw.matches;
-  //
-  //     res.render('matches',{
-  //       title: 'Matches for :' + currentDraw.name,
-  //       draw:currentDraw,
-  //       matches:currentMatches,
-  //       modal:false
-  //     });
+  var currentDraw = null;
+  drawDb.draws.findOne({_id: ObjectId(req.params.id)}, function(err,doc){
+    var drawId = ObjectId(req.params.id);
+    if(err){
+      console.log(err);
+    }
+    else {
+      currentDraw = doc;
+      //res.send(currentDraw);
 
-var draw = {
-   _id : 123,
-   name : "Test",
-   active : false }
+      if (currentDraw.hasOwnProperty('matches'))
+      {
+        res.render('matches',{
+          title: 'Matches for :' + currentDraw.name,
+          draw:currentDraw,
+          matches:currentDraw.matches,
+          modal:false
+        });
+      }
+      else {
+        var newMatch = {
+               _id : 123,
+            fromId:'1234',
+            fromName:'From',
+            toId:'5678',
+            toName: 'To'
+          }
+        drawDb.draws.update(
+          {_id : drawId},
+          {$push:{matches:newMatch}}
+        );
 
-var matches = [{
-     _id : 123,
-  fromId:'1234',
-  fromName:'From',
-  toId:'5678',
-  toName: 'To'
-},
-{
-     _id : 456,
-  fromId:'0002',
-  fromName:'F',
-  toId:'1113',
-  toName: 'T'
-}]
+        res.render('matches',{
+          title: 'Matches for :' + currentDraw.name,
+          draw:currentDraw,
+          matches:[newMatch],
+          modal:false
+        });
 
-  res.render('matches',{
-    title: 'Matches for :' + draw.name,
+      }
+    }
+
+
+  });
+
+});
+
+// MATCH NEW|GET
+app.get('/matches/new/:id', function(req, res) {
+
+  drawDb.draws.findOne({_id: ObjectId(req.params.id)}, function(err,doc){
+
+    if (err)
+    {
+      console.log(err);
+    }
+
+    var draw = doc;
+  res.render('match',{
+    title: 'Match Details',
     draw:draw,
-    matches:matches,
-    modal:false
-  })
+    match:match,
+    operation:'add',
+    modal:false,
+  });
+});
 });
 
 

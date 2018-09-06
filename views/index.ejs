@@ -13,11 +13,12 @@
       <h1 class="cover-heading"><%= title %></h1>
       <p class="lead"> Secret Santa is a fun Christmas web app that allows you to register your whole friends, family or work group. You will then be able to prompt a random draw with private email notification </p>
 
-      <div class="btn-group" role="group">
+      <div class="card m-1">
         <a href="/register/" class="btn btn-lg btn-primary">Register</a>
         <a href="/draws/send" class="btn btn-lg btn-default">My Draws</a>
-        <!--<a href="/login/" class="btn btn-lg btn-default">Log In</a> TODO Create login -->
       </div>
+        <!--<a href="/login/" class="btn btn-lg btn-default">Log In</a> TODO Create login -->
+
       <%if (modal) { %>
         <div class="alert alert-success" role="alert">
           <%=modalText%>

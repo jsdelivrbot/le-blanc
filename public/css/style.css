@@ -3,7 +3,7 @@ body {
   height: 100%;
 }
 
-body {
+ body {
   display: -ms-flexbox;
   display: -webkit-box;
   display: flex;
@@ -28,7 +28,7 @@ body {
   color: #333;
   text-shadow: none; /* Prevent inheritance from `body` */
   background-color: #aeb1b7;
-  border: .05rem solid #fff;
+  border: .05rem solid #aeb1b7;
 }
 
 .form-signin {
