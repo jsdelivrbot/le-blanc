@@ -232,7 +232,7 @@ app.get('/draw/matches/:id', function(req, res) {
       if (currentDraw.hasOwnProperty('matches'))
       {
         res.render('matches',{
-          title: 'Matches for :' + currentDraw.name,
+          title: 'Matches for : ' + currentDraw.name,
           draw:currentDraw,
           matches:currentDraw.matches,
           modal:false
@@ -260,14 +260,60 @@ app.get('/draw/matches/:id', function(req, res) {
 
       }
     }
-
-
   });
-
 });
 
-// MATCH NEW|GET
-app.get('/matches/new/:id', function(req, res) {
+
+
+
+
+// DRAWS/MEMBERS | GET
+// MEMBER|GET
+app.get('/draw/members/:id', function(req, res) {
+  var currentDraw = null;
+  drawDb.draws.findOne({_id: ObjectId(req.params.id)}, function(err,doc){
+    var drawId = ObjectId(req.params.id);
+    if(err){
+      console.log(err);
+    }
+    else {
+      currentDraw = doc;
+      //res.send(currentDraw);
+
+      if (currentDraw.hasOwnProperty('members'))
+      {
+        res.render('members',{
+          title: 'Members for : ' + currentDraw.name,
+          draw:currentDraw,
+          members:currentDraw.members,
+          modal:false
+        });
+      }
+      else {
+        var newMember = {
+               _id : 123,
+            userId:123,
+            userName:""
+          }
+        drawDb.draws.update(
+          {_id : drawId},
+          {$push:{members:newMember}}
+        );
+
+        res.render('members',{
+          title: 'Members for :' + currentDraw.name,
+          draw:currentDraw,
+          members:[newMember],
+          modal:false
+        });
+
+      }
+    }
+  });
+});
+
+// MEMBER NEW|GET
+app.get('/members/new/:id', function(req, res) {
 
   drawDb.draws.findOne({_id: ObjectId(req.params.id)}, function(err,doc){
 
@@ -276,14 +322,26 @@ app.get('/matches/new/:id', function(req, res) {
       console.log(err);
     }
 
-    var draw = doc;
-  res.render('match',{
-    title: 'Match Details',
-    draw:draw,
-    match:match,
-    operation:'add',
-    modal:false,
-  });
+    else{
+
+      var draw = doc;
+      var newMember = {};
+
+      userDb.users.find(function(err,docs){
+        res.render('member',{
+          title: 'Select User',
+          draw:draw,
+          users:docs,
+          operation:'add',
+          modal:false,
+        });
+      });
+
+
+
+
+    }
+
 });
 });
 
