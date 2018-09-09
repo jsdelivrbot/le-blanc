@@ -21,10 +21,9 @@
           <div class="list-group-item list-group-item-action" ><%= member.userName %>
           </div>
 
-
           <div class="btn-group" role="group">
-            <a href="/member/<%=member._id%>" class="btn btn btn-default">Edit</a>
-            <a href="" class="deleteMember btn btn btn-danger" data-id="<%=member._id%>">Delete</a>
+            <a href="/member/<%=member._id%>" class="btn btn btn-default">(TODO)Edit</a>
+            <a href="" class="deleteMember btn btn btn-danger" data-user="<%=member.userId%>" data-draw="<%=draw._id%>">Delete</a>
           </div>
           <% }) %>
         </div>

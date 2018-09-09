@@ -4,7 +4,10 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
+var func = require('./func.js');
+
 var {check,validationResult} = require('express-validator/check');
+
 
 // Mongo userDb
 var mongojs = require('mongojs');
@@ -219,53 +222,31 @@ app.get('/draws/:id',function(req,res){
 // DRAWS/MATCHES | GET
 // DRAWS|GET
 app.get('/draw/matches/:id', function(req, res) {
-  var currentDraw = null;
+  var thisDraw = null;
+  var thisMatches = [];
   drawDb.draws.findOne({_id: ObjectId(req.params.id)}, function(err,doc){
-    var drawId = ObjectId(req.params.id);
     if(err){
       console.log(err);
     }
     else {
-      currentDraw = doc;
-      //res.send(currentDraw);
+      thisDraw = doc;
 
-      if (currentDraw.hasOwnProperty('matches'))
+      thisMatches = doc.matches;
+
+      if (thisMatches==null || thisMatches.length == 0 || thisMatches[0] == null)
       {
-        res.render('matches',{
-          title: 'Matches for : ' + currentDraw.name,
-          draw:currentDraw,
-          matches:currentDraw.matches,
-          modal:false
-        });
+        thisMatches=[];
       }
-      else {
-        var newMatch = {
-               _id : 123,
-            fromId:'1234',
-            fromName:'From',
-            toId:'5678',
-            toName: 'To'
-          }
-        drawDb.draws.update(
-          {_id : drawId},
-          {$push:{matches:newMatch}}
-        );
-
-        res.render('matches',{
-          title: 'Matches for :' + currentDraw.name,
-          draw:currentDraw,
-          matches:[newMatch],
-          modal:false
-        });
-
-      }
-    }
-  });
+      //res.send(currentDraw);
+      res.render('matches',{
+        title: 'Matches for : ' + thisDraw.name,
+        draw:thisDraw,
+        matches:thisMatches,
+        modal:false
+      });
+  }
 });
-
-
-
-
+});
 
 // DRAWS/MEMBERS | GET
 // MEMBER|GET
@@ -290,23 +271,13 @@ app.get('/draw/members/:id', function(req, res) {
         });
       }
       else {
-        var newMember = {
-               _id : 123,
-            userId:123,
-            userName:""
-          }
-        drawDb.draws.update(
-          {_id : drawId},
-          {$push:{members:newMember}}
-        );
-
+        var emptyMembers = [];
         res.render('members',{
-          title: 'Members for :' + currentDraw.name,
+          title: 'Members for : ' + currentDraw.name,
           draw:currentDraw,
-          members:[newMember],
+          members:emptyMembers,
           modal:false
         });
-
       }
     }
   });
@@ -336,18 +307,149 @@ app.get('/members/new/:id', function(req, res) {
           modal:false,
         });
       });
-
-
-
-
     }
-
 });
 });
 
+app.post('/member/add/:id', function(req, res){
 
+  var thisDraw = null;
+  var thisUser = null;
+  drawDb.draws.findOne({_id : ObjectId(req.params.id)}, function(err,draw){
+    if (err)
+    {
+      console.log(err);
+    }
+    else {
+      thisDraw = draw;
+      userDb.users.findOne({_id : ObjectId(req.body.user)}, function(err2,user){
+        if (err2)
+        {
+          console.log(err2);
+        }
+        else
+        {
+          thisUser = user;
+          var newMember = {
+            userId : thisUser._id,
+            userName : thisUser.first_name,
+          };
+          drawDb.draws.update(
+            {_id : thisDraw._id},
+            {$addToSet:{members:newMember}},
+            function(err3,result){
 
+              if (err3)
+              {
+                console.log(err3);
+              }
+              else {
+                res.send('200 OK');
+                //console.log(result);
+              }
+            }
+          );
+        }
+      });
+    }
+  });
+});
 
+app.delete('/member/delete/:id',function(req, res){
+    var thisDraw = null;
+    var thisUser = null;
+    drawDb.draws.findOne({_id : ObjectId(req.params.id)}, function(err,draw){
+      if (err)
+      {
+        console.log(err);
+      }
+      else {
+        thisDraw = draw;
+        userDb.users.findOne({_id : ObjectId(req.body.user)}, function(err2,user){
+          if (err2)
+          {
+            console.log(err2);
+          }
+          else
+          {
+            thisUser = user;
+            var newMember = {
+              userId : thisUser._id,
+              userName : thisUser.first_name,
+            };
+            drawDb.draws.update(
+              {_id : thisDraw._id},
+              {$pull:{members:newMember}},
+              function(err3,result){
+
+                if (err3)
+                {
+                  console.log(err3);
+                }
+                else {
+                  res.send('200 OK');
+                }
+              }
+            );
+          }
+        });
+      }
+    });
+  });
+
+  app.post('/draw/roll/:id',function(req, res){
+    var thisDraw = null;
+    var rollResult = null;
+    drawDb.draws.findOne({_id:ObjectId(req.params.id)},function(err,draw){
+      thisDraw = draw;
+      if(err){
+        console.log(err);
+      }
+      else {
+
+        rollResult = func.roll(thisDraw);
+        var reRolls = 0;
+        //console.log('result: ' + rollResult.success);
+
+        while(rollResult.success == false){
+          //console.log('re-rolling');
+          rollResult = func.roll(thisDraw);
+          reRolls++;
+          //console.log('re-roll result: ' + rollResult.success);
+        }
+
+        console.log('Finally! After '+ reRolls + ' re-rolls');
+        drawDb.draws.update(
+          {_id:thisDraw._id},
+          {$set: {matches:[]}},
+          function(err2,result1){
+            if (err2)
+            {
+              console.log(err2);
+            }
+            else {
+              //console.log(result1);
+              drawDb.draws.update(
+                {_id:thisDraw._id},
+                {$set: {matches: rollResult.matches}},
+                function(err3,result2){
+
+                  if (err3)
+                  {
+                    console.log(err3);
+                  }
+                  else {
+                    //console.log(result2);
+                    res.send('200 OK');
+                  }
+                }
+              )
+            }
+          }
+        )
+      }
+    });
+  });
 
 // FINAL
 app.set('port', (process.env.PORT || 5000));
