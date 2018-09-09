@@ -299,12 +299,24 @@ app.get('/members/new/:id', function(req, res) {
       var newMember = {};
 
       userDb.users.find(function(err,docs){
+      var users = docs;
+      var members = draw.members;
+      members.forEach(function(member, i){
+        docs.forEach(function(user, c){
+          if (user._id.equals(member.userId))
+          {
+            users.splice(c,1);
+          }
+
+        })
+    })
+
         res.render('member',{
           title: 'Select User',
           draw:draw,
           users:docs,
           operation:'add',
-          modal:false,
+          modal:false
         });
       });
     }

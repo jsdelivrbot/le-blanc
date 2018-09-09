@@ -14,18 +14,15 @@
 
       <a href="/draws/new" class="btn btn-lg btn-primary">Add</a>
 
-      <div class="list-group">
-        <% draws.forEach(function(draw){ %>
-          <div class="list-group-item list-group-item-action" ><%= draw.name %>
-          </div>
-
-
-          <div class="btn-group" role="group">
-            <a href="/draws/<%=draw._id%>" class="btn btn btn-default">Edit</a>
-            <a href="" class="deleteDraw btn btn btn-danger" data-id="<%=draw._id%>">Delete</a>
-          </div>
-          <% }) %>
-        </div>
+      <% draws.forEach(function(draw){ %>
+      <div class="input-group">
+      <label class="form-control"> <%= draw.name %> </label>
+      <div class="input-group-append">
+        <a href="/draws/<%=draw._id%>" class="btn btn-secondary">Edit</a>
+        <a href="" class="deleteDraw btn btn btn-danger" data-id="<%=draw._id%>">Delete</a>
+      </div>
+      </div>
+      <% }) %>
 
         <%if (modal) { %>
           <div class="alert alert-success" role="alert">

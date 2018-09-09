@@ -9,24 +9,20 @@
       <% include partials/header %>
     </header>
 
-
-
     <main role="main" class="inner cover">
       <h1 class="cover-heading"><%= title %></h1>
 
       <a href="/members/new/<%=draw._id%>" class="btn btn-lg btn-primary">Add</a>
 
-      <div class="list-group">
-        <% members.forEach(function(member){ %>
-          <div class="list-group-item list-group-item-action" ><%= member.userName %>
-          </div>
-
-          <div class="btn-group" role="group">
+      <% members.forEach(function(member){ %>
+      <div class="input-group">
+          <label class="form-control"><%= member.userName %></label>
+          <div class="input-group-append" >
             <a href="/member/<%=member._id%>" class="btn btn btn-default">(TODO)Edit</a>
             <a href="" class="deleteMember btn btn btn-danger" data-user="<%=member.userId%>" data-draw="<%=draw._id%>">Delete</a>
           </div>
+      </div>
           <% }) %>
-        </div>
 
         <%if (modal) { %>
           <div class="alert alert-success" role="alert">

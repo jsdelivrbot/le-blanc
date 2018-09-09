@@ -12,18 +12,19 @@
     <main role="main" class="inner cover">
       <h1 class="cover-heading"><%= title %></h1>
 
-      <div class="list-group">
+
         <% users.forEach(function(user){ %>
-          <a class="list-group-item list-group-item-action" href="/users/<%=user._id%>"><%= user.first_name %> (<%= user.email %>)
-          </a>
-
-
-          <div class="btn-group" role="group">
+          <div class="input-group">
+          <label class="form-control"><%= user.first_name %> (<%= user.email %>)</label>
+          <div class="input-group-append">
             <a href="/users/<%=user._id%>" class="btn btn btn-default">Edit</a>
             <a href="#" class="deleteUser btn btn btn-danger" data-id="<%=user._id%>">Delete</a>
           </div>
-          <% }) %>
-        </div>
+
+
+          </div>
+        <% }) %>
+
 
         <%if (modal) { %>
           <div class="alert alert-success" role="alert">

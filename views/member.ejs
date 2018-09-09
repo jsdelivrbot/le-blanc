@@ -10,18 +10,16 @@
     </header>
 
     <main role="main" class="inner cover">
-      <div class="list-group">
+
         <% users.forEach(function(user){ %>
-          <div class="list-group-item list-group-item-action" ><%= user.first_name %>(<%= user.email %>)
+          <div class="input-group">
+          <label type="text" class="form-control"> <%= user.first_name %>(<%= user.email %>)</label>
+          <div class="input-group-append">
+            <button class="selectUser btn btn-outline-danger" type="button" data-user="<%=user._id%>" data-draw="<%=draw._id%>">Select</button>
           </div>
-
-
-          <div class="btn-group" role="group">
-            <!-- No idea if attaching a | seperated data id will work here, need to test -->
-            <a href="#" class="selectUser btn btn btn-danger" data-user="<%=user._id%>" data-draw="<%=draw._id%>">Select</a>
-          </div>
+            </div>
           <% }) %>
-        </div>
+
 
       <%if (modal) { %>
         <div class="alert alert-success" role="alert">
