@@ -4,21 +4,21 @@
 </head>
 
 <body class="text-center">
-  <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-    <header class="masthead mb-auto">
-      <% include partials/header %>
-    </header>
+  <div class="container-fluid h-100">
 
 
+    <div class="row h-100">
+        <% include partials/left %>
 
-    <main role="main" class="inner cover">
+        <% include partials/right_start %>
+        <div class="text-center">
       <h1 class="cover-heading"><%= title %></h1>
 
-      <a href="#" data-id="<%=draw._id%>" class="rollDraw btn btn-lg btn-primary">Roll</a>
+      <a href="#" data-id="<%=draw._id%>" class="rollDraw btn btn-lg btn-danger">Roll</a>
 
       <div class="list-group">
         <% matches.forEach(function(match){ %>
-          <div class="list-group-item list-group-item-action" type="password" ><%= match.fromName %> -> <%= match.toName %>
+          <div class="list-group-item list-group-item-action" type="password" ><%= match.fromName %> *hidden*
           </div>
 
 
@@ -34,14 +34,10 @@
             <%=modalText%>
           </div>
           <% } %>
-        </main>
+          <% include partials/right_end %>
 
 
-        <footer class="mastfoot mt-auto">
-          <div class="inner">
-            <% include partials/footer %>
-          </div>
-        </footer>
+              </div>
       </div>
     </body>
     </html>

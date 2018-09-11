@@ -4,14 +4,15 @@
 </head>
 
 <body class="text-center">
-  <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-    <header class="masthead mb-auto">
-      <% include partials/header %>
-    </header>
+  <div class="container-fluid h-100">
 
-    <main role="main" class="inner cover">
+    <div class="row h-100">
+      <% include partials/left %>
 
+      <% include partials/right_start %>
+<div class="text-center">
         <% users.forEach(function(user){ %>
+
           <div class="input-group">
           <label type="text" class="form-control"> <%= user.first_name %>(<%= user.email %>)</label>
           <div class="input-group-append">
@@ -27,12 +28,10 @@
         </div>
         <% } %>
 
-      </main>
-      <footer class="mastfoot mt-auto">
-        <div class="inner">
-          <% include partials/footer %>
-        </div>
-      </footer>
+        <% include partials/right_end %>
+
+</div>
     </div>
+
   </body>
   </html>

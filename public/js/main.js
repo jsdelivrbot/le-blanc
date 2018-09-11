@@ -16,8 +16,7 @@ function deleteUser(){
       url:'/users/delete/'+$(this).data('id')
     }).done(function(response){
       window.location.replace('/users');
-    })
-    ;
+    });
     window.location.replace('/users');
   } else {
     return false;

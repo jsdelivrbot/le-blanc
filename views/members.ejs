@@ -4,15 +4,16 @@
 </head>
 
 <body class="text-center">
-  <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-    <header class="masthead mb-auto">
-      <% include partials/header %>
-    </header>
+  <div class="container-fluid h-100">
 
-    <main role="main" class="inner cover">
+    <div class="row h-100">
+        <% include partials/left %>
+
+        <% include partials/right_start %>
+              <div class="text-center">
       <h1 class="cover-heading"><%= title %></h1>
 
-      <a href="/members/new/<%=draw._id%>" class="btn btn-lg btn-primary">Add</a>
+      <a href="/members/new/<%=draw._id%>" class="btn btn-lg btn-danger">Add</a>
 
       <% members.forEach(function(member){ %>
       <div class="input-group">
@@ -29,14 +30,8 @@
             <%=modalText%>
           </div>
           <% } %>
-        </main>
-
-
-        <footer class="mastfoot mt-auto">
-          <div class="inner">
-            <% include partials/footer %>
-          </div>
-        </footer>
+        </div>
+      </div>
       </div>
     </body>
     </html>

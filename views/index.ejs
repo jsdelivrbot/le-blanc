@@ -4,34 +4,35 @@
 </head>
 
 <body class="text-center">
-  <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-    <header class="masthead mb-auto">
-      <% include partials/header %>
-    </header>
 
-    <main role="main" class="inner cover">
+  <div class="container-fluid h-100">
+
+    <div class="row h-100">
+        <% include partials/left %>
+
+        <% include partials/right_start %>
+      <div class="text-center">
       <h1 class="cover-heading"><%= title %></h1>
       <p class="lead"> Secret Santa is a fun Christmas web app that allows you to register your whole friends, family or work group. You will then be able to prompt a random draw with private email notification </p>
 
-      <div class="card m-1">
-        <a href="/register/" class="btn btn-lg btn-primary">Register</a>
+      <div class="card m-5">
+        <a href="/register/" class="btn btn-lg btn-danger">Register</a>
         <a href="/draws/send" class="btn btn-lg btn-default">My Draws</a>
       </div>
-        <!--<a href="/login/" class="btn btn-lg btn-default">Log In</a> TODO Create login -->
+    <!--<a href="/login/" class="btn btn-lg btn-default">Log In</a> TODO Create login -->
 
       <%if (modal) { %>
         <div class="alert alert-success" role="alert">
           <%=modalText%>
         </div>
         <% } %>
-      </main>
+      </div>
 
 
-      <footer class="mastfoot mt-auto">
-        <div class="inner">
-          <% include partials/footer %>
-        </div>
-      </footer>
+<% include partials/right_end %>
+
+
     </div>
+  </div>
   </body>
   </html>

@@ -22,12 +22,21 @@ body {
 }
 
 /* Custom default button */
-.btn-default,
+ .btn-default,
 .btn-default:hover,
 .btn-default:focus {
   color: #333;
-  text-shadow: none; /* Prevent inheritance from `body` */
+  text-shadow: none;
   background-color: #aeb1b7;
+  border: .05rem solid #aeb1b7;
+}
+
+.btn-red,
+.btn-red:hover,
+.btn-red:focus {
+  color: #333;
+  text-shadow: none;
+  background-color: #ff0000;
   border: .05rem solid #aeb1b7;
 }
 

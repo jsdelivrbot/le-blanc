@@ -4,19 +4,19 @@
 </head>
 
 <body class="text-center">
-  <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-    <header class="masthead mb-auto">
-      <% include partials/header %>
-    </header>
+  <div class="container-fluid h-100">
 
-    <main role="main" class="inner cover">
+        <div class="row h-100">
+            <% include partials/left %>
+
+            <% include partials/right_start %>
 
       <div class="container">
         <div class="row">
           <% if (draw.name != null && draw.name != '') {%>
           <div class="col-4">
           <div class="btn-group-vertical" role="group">
-          <a href="/draw/members/<%=draw._id%>/" class="btn btn btn-primary">Members</a>
+          <a href="/draw/members/<%=draw._id%>/" class="btn btn btn-danger">Members</a>
           <a href="/draw/matches/<%=draw._id%>/" class="btn btn btn-primary">Matches</a>
           <a href="#" class="btn btn btn-info">Send</a>
           <a href="#" class="btn btn btn-default">Draw</a>
@@ -30,7 +30,7 @@
           <label for="inputName" class="sr-only">Name</label>
           <input type="text" value="<%=draw.name%>" id="inputName" name="name" class="form-control" placeholder="Name"  required autofocus>
           <input type="hidden" value="<%=draw._id%>" id="inputId" name="id" class="form-control">
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
+          <button class="btn btn-lg btn-danger btn-block" type="submit">Save</button>
         </form>
       </div>
             <%} else {%>
@@ -40,7 +40,7 @@
                   <label for="inputName" class="sr-only">Name</label>
                   <input type="text" value="<%=draw.name%>" id="inputName" name="name" class="form-control" placeholder="Name"  required autofocus>
                   <input type="hidden" value="<%=draw._id%>" id="inputId" name="id" class="form-control">
-                  <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
+                  <button class="btn btn-lg btn-danger btn-block" type="submit">Save</button>
                 </form>
               </div>
               <% } %>
@@ -53,12 +53,11 @@
         </div>
         <% } %>
 
-      </main>
-      <footer class="mastfoot mt-auto">
-        <div class="inner">
-          <% include partials/footer %>
-        </div>
-      </footer>
+        <% include partials/right_end %>
+
+
+            </div>
+
     </div>
   </body>
   </html>

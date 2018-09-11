@@ -4,13 +4,12 @@
 </head>
 
 <body class="text-center">
-  <div class="container-fluid h-100">
+  <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+    <header class="masthead mb-auto">
+      <% include partials/header %>
+    </header>
 
-    <div class="row h-100">
-        <% include partials/left %>
-
-        <% include partials/right_start %>
-        <div class= "text-center">
+    <main role="main" class="inner cover">
 
       <form class="form-signin" method="POST" action="/users/add">
         <h1 class="h3 mb-3 font-weight-normal"><%= title %></h1>
@@ -21,13 +20,13 @@
         <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
         <button class="submitUser btn btn-lg btn-danger btn-block" type="submit">Submit</button>
       </form>
-      <% include partials/right_end %>
 
-
-          </div>
-
-
-
+    </main>
+    <footer class="mastfoot mt-auto">
+      <div class="inner">
+        <% include partials/footer %>
+      </div>
+    </footer>
   </div>
 </body>
 </html>
