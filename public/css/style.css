@@ -4,7 +4,7 @@ body {
 }
 
  body {
-  display: -ms-flexbox;
+  /* display: -ms-flexbox;
   display: -webkit-box;
   display: flex;
   -ms-flex-align: center;
@@ -14,7 +14,7 @@ body {
   -webkit-box-pack: center;
   justify-content: center;
   padding-top: 40px;
-  padding-bottom: 40px;
+  padding-bottom: 40px; */
   background-color: #f5f5f5;
 }
 .cover-container {
@@ -28,15 +28,6 @@ body {
   color: #333;
   text-shadow: none;
   background-color: #aeb1b7;
-  border: .05rem solid #aeb1b7;
-}
-
-.btn-red,
-.btn-red:hover,
-.btn-red:focus {
-  color: #333;
-  text-shadow: none;
-  background-color: #ff0000;
   border: .05rem solid #aeb1b7;
 }
 
@@ -68,4 +59,13 @@ body {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+@media (max-width: 1200px) {
+  .left{
+    height:50%
+  }
+  .right{
+    height:50%
+  }
 }
