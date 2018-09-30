@@ -72,25 +72,40 @@ app.post('/users/add', [
   check('first_name').not().isEmpty(),
   check('email').isEmail()
 ],(req,res) => {
+  var inputEmail = req.body.email;
+  var inputFirstName = req.body.first_name;
   const errors = validationResult(req);
   if (!errors.isEmpty()){
+    console.log(req.body);
     return res.status(422).json({errors:errors.array()});
   }
-  var newUser = {
-    first_name : req.body.first_name,
-    email : req.body.email,
-    approved: false
-  }
-  userDb.users.insert(newUser, function(err,result){
-    if (err){
-      console.log(err);
+
+  userDb.users.findOne({
+    email: inputEmail},
+  function(err,doc){
+    if (doc)
+    {
+      console.log("User already registered!");
+      res.send("User already regitered!");
     }
-    res.render('index',{
-      title: 'Secret Santa',
-      modal:true,
-      modalText:'Successfully registered, please check your email for a unique magic link!'
-    });
-  });
+    else
+    {
+      var newUser = {
+        first_name : inputFirstName,
+        email : inputEmail,
+        approved: false
+      }
+      userDb.users.insert(newUser, function(err,result){
+        if (err){
+          console.log(err);
+        }
+        console.log(result);
+        res.send(result);
+      });
+    }
+  })
+
+
 });
 
 // USERS|DELETE
@@ -462,6 +477,17 @@ app.delete('/member/delete/:id',function(req, res){
       }
     });
   });
+
+app.get('/success/user/:name',function(req,res){
+  res.render('index',{
+    title: 'Secret Santa',
+    modal:true,
+    modalText:'Successfully registered ' + req.params.name + ', please check your email for a unique magic link!'
+  });
+
+})
+
+
 
 // FINAL
 app.set('port', (process.env.PORT || 5000));

@@ -5,7 +5,52 @@ $(document).ready(function(){
   $('.selectUser').on('click',selectUser);
   $('.deleteMember').on('click',deleteMember);
   $('.rollDraw').on('click',rollDraw);
+  $('.submitUser').on('click',registerUser);
+
+  $('#registerForm').submit(function(event) {
+    event.preventDefault();
+
+
+      // Stop the browser from submitting the form.
+      //alert("Preventing stuff");
+
+  });
+
+
+  // Set up an event listener for the contact form.
+
 });
+
+function registerUser(){
+    var myform = document.getElementById("registerForm");
+    console.log(myform);
+    //var fd = myform.serialize();
+    //var fd = new FormData(myform);
+    console.log('Trying to register...');
+
+    var fd = {
+            'first_name'              : $('input[name=first_name]').val(),
+            'email'             : $('input[name=email]').val()
+        };
+
+    $.ajax({
+      type:'POST',
+      url:'/users/add/',
+      data:fd
+    })
+
+    .done(function(response){
+      var greetName = $('input[name=first_name]').val();
+      console.log(response);
+      window.location.replace('/success/user/'+ greetName);
+    })
+
+    .fail(function(response){
+      console.log(response);
+      alert('Problem registering user!');
+      //window.location.replace('/draws/');
+    });
+}
 
 function deleteUser(){
   var confirmation = confirm('Are you Sure?');
