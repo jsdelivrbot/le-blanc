@@ -542,7 +542,7 @@ app.get('/draws/send/:id',function(req,res){
 
       thisMatches.forEach(function(match, c){
         var emailSubject = 'Secret Santa Draw';
-        var emailBody = 'Dear '+match.fromName+'<br> Your draw is: '+match.toName;
+        var emailBody = 'Dear '+match.fromName+' Your draw is: '+match.toName;
         emailsOk = func.sendMail(match.fromEmail, emailSubject, emailBody);
       })
 
