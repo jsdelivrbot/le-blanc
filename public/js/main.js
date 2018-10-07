@@ -137,9 +137,9 @@ function sendDraw(){
       type:'POST',
       url:'/draws/send/'+$(this).data('id')
     }).done(function(response){
-      //window.location.replace('/success/send/');
+      window.location.replace('/success/send/');
     }).fail(function(response){
-      //window.location.replace('/fail/send/');
+      window.location.replace('/fail/send/');
     });
     //window.location.replace('/draws/');
   } else {
