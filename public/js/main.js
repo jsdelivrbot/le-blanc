@@ -138,6 +138,7 @@ function sendDraw(){
     }).done(function(response){
       window.location.replace('/success/send/');
     }).fail(function(response){
+      alert(response);
       window.location.replace('/fail/send/');
     });
     //window.location.replace('/draws/');
