@@ -6,6 +6,7 @@ $(document).ready(function(){
   $('.deleteMember').on('click',deleteMember);
   $('.rollDraw').on('click',rollDraw);
   $('.submitUser').on('click',registerUser);
+  $('.sendDraw').on('click',sendDraw);
 
   $('#registerForm').submit(function(event) {
     event.preventDefault();
@@ -125,4 +126,22 @@ function rollDraw(){
       window.location.replace('/draw/matches/'+drawId);
     });
 
+}
+
+function sendDraw(){
+  var confirmation = confirm('Are you Sure?');
+
+  if(confirmation){
+    $.ajax({
+      type:'GET',
+      url:'/draws/send/'+$(this).data('id')
+    }).done(function(response){
+      window.location.replace('/success/send/');
+    }).fail(function(response){
+      window.location.replace('/fail/send/');
+    });
+    //window.location.replace('/draws/');
+  } else {
+    return false;
+  }
 }

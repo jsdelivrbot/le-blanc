@@ -11,8 +11,9 @@
     "ejs": "*",
     "express": "*",
     "express-validator": "*",
+    "mailgun-js": "^0.21.0",
     "mongojs": "*",
-    "shuffle-array": "^1.0.1"
+    "shuffle-array": "*"
   },
   "engines": {
     "node": "*"

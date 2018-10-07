@@ -311,13 +311,22 @@ app.get('/members/new/:id', function(req, res) {
     else{
 
       var draw = doc;
+      console.log(doc);
       var newMember = {};
 
       userDb.users.find(function(err,docs){
       var users = docs;
-      var members = draw.members;
+        var members = [];
+      if(draw.members)
+      {
+        members = draw.members;
+      }
+
       members.forEach(function(member, i){
+        console.log('Member #'+i);
         docs.forEach(function(user, c){
+          console.log('User #'+c);
+
           if (user._id.equals(member.userId))
           {
             users.splice(c,1);
@@ -360,6 +369,7 @@ app.post('/member/add/:id', function(req, res){
           var newMember = {
             userId : thisUser._id,
             userName : thisUser.first_name,
+            userEmail : thisUser.email
           };
           drawDb.draws.update(
             {_id : thisDraw._id},
@@ -403,6 +413,7 @@ app.delete('/member/delete/:id',function(req, res){
             var newMember = {
               userId : thisUser._id,
               userName : thisUser.first_name,
+              userEmail : thisUser.email
             };
             drawDb.draws.update(
               {_id : thisDraw._id},
@@ -485,9 +496,74 @@ app.get('/success/user/:name',function(req,res){
     modalText:'Successfully registered ' + req.params.name + ', please check your email for a unique magic link!'
   });
 
-})
+});
 
+app.get('/success/send/',function(req,res){
+  res.render('index',{
+    title: 'Secret Santa',
+    modal:true,
+    level:'success',
+    modalText:'Email Sent successfully!'
+  });
 
+});
+
+app.get('/fail/send/',function(req,res){
+  res.render('index',{
+    title: 'Secret Santa',
+    modal:true,
+    level:'danger',
+    modalText:'Email had problems sending!'
+  });
+
+});
+
+app.get('/draws/send/:id',function(req,res){
+  console.log('Attempting to send draw via email...');
+
+  // Get list of MATCHES
+  var thisDraw = null;
+  var thisMatches = [];
+  drawDb.draws.findOne({_id: ObjectId(req.params.id)}, function(err,doc){
+    if(err){
+      console.log(err);
+    }
+    else {
+      thisDraw = doc;
+
+      thisMatches = doc.matches;
+
+      if (thisMatches==null || thisMatches.length == 0 || thisMatches[0] == null)
+      {
+        thisMatches=[];
+      }
+
+      var emailsOk = true;
+
+      thisMatches.forEach(function(match, c){
+        var emailSubject = 'Secret Santa Draw';
+        var emailBody = 'Dear '+match.fromName+'<br> Your draw is: '+match.toName;
+        emailsOk = func.sendMail(match.fromEmail, emailSubject, emailBody);
+      })
+
+      if(emailsOk){
+        res.status(200).send();
+      }
+      else {
+        res.status(421).send('Error sending email!');
+      }
+
+/*      res.render('matches',{
+        title: 'Matches for : ' + thisDraw.name,
+        draw:thisDraw,
+        matches:thisMatches,
+        modal:false
+      });
+*/
+  }
+});
+
+});
 
 // FINAL
 app.set('port', (process.env.PORT || 5000));
