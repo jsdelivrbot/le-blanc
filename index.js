@@ -99,7 +99,7 @@ app.post('/users/add', [
         if (err){
           console.log(err);
         }
-        console.log(result);
+        //console.log(result);
         res.send(result);
       });
     }
@@ -311,7 +311,7 @@ app.get('/members/new/:id', function(req, res) {
     else{
 
       var draw = doc;
-      console.log(doc);
+      //console.log(doc);
       var newMember = {};
 
       userDb.users.find(function(err,docs){
@@ -323,9 +323,9 @@ app.get('/members/new/:id', function(req, res) {
       }
 
       members.forEach(function(member, i){
-        console.log('Member #'+i);
+
         docs.forEach(function(user, c){
-          console.log('User #'+c);
+
 
           if (user._id.equals(member.userId))
           {
@@ -518,7 +518,7 @@ app.get('/fail/send/',function(req,res){
 
 });
 
-app.get('/draws/send/:id',function(req,res){
+app.post('/draws/send/:id',function(req,res){
   console.log('Attempting to send draw via email...');
 
   // Get list of MATCHES
@@ -543,14 +543,17 @@ app.get('/draws/send/:id',function(req,res){
       thisMatches.forEach(function(match, c){
         var emailSubject = 'Secret Santa Draw';
         var emailBody = 'Dear '+match.fromName+' Your draw is: '+match.toName;
-        emailsOk = func.sendMail(match.fromEmail, emailSubject, emailBody);
+        func.sendMail(match.fromEmail, emailSubject, emailBody);
       })
 
       if(emailsOk){
+        //console.log('Email OK');
         res.status(200).send();
       }
       else {
-        res.status(421).send('Error sending email!');
+        console.log('Email Failed');
+        //res.status(200).send();
+        res.status(500).send('Error sending email!');
       }
 
 /*      res.render('matches',{

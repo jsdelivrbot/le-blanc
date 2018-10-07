@@ -49,7 +49,6 @@ var methods = {
     return result;
   },
   sendMail : function(toEmail, subject,body){
-
     // =========================EMAIL FUNC - NEEDS TO BE MOVED===========================
 
     var api_key = process.env.MAILGUN_API_KEY;
@@ -65,16 +64,15 @@ var methods = {
     };
 
     mailgun.messages().send(data, function (error, body) {
+      //console.log(body);
       if(error)
       {
-        console.log(body);
-        return false;
+        console.log(error);
       }
-      return true;
-
     });
 
     // ==================================================================================
+
   }
 };
 
