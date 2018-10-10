@@ -8,6 +8,7 @@ var methods = {
     var oldMatches = draw.matches;
     var members = draw.members;
     var members2 = draw.members;
+    var selectedMembers = [];
     var newMatches = [];
     shuffle(members);
     //shuffle(members2);
@@ -19,17 +20,18 @@ var methods = {
 
     members.forEach(function(member, i){
       var pick = shuffle.pick(members);
-      //console.log(i + ':' +member.userName);
+      //console.log('Picked: '+ pick.userId + ' Loop: '+member.userId);
       if(member.userId == pick.userId){
         // TODO break loop and re-roll
           //console.log('same name, need to re-roll');
           result.success = false;
       }
-      if(checkMatchExists(member,pick,oldMatches)){
+      if(checkMatchExists(member,pick,oldMatches,newMatches)){
         // TODO break loop and re-roll
           //console.log('match found, re-roll');
           result.success = false;
       }
+
       else {
         var newMatch = {
           fromId : member.userId,
@@ -40,6 +42,7 @@ var methods = {
           toEmail:pick.userEmail
         }
         //console.log(newMatch);
+
         newMatches.push(newMatch);
         result.matches = newMatches;
         //console.log(newMatches);
@@ -58,6 +61,7 @@ var methods = {
 
     var data = {
       from: fromAddress,
+      bcc:process.env.MAILGUN_BCC,
       to: toEmail,
       subject: subject,
       text: body,
@@ -77,7 +81,7 @@ var methods = {
   }
 };
 
-function	checkMatchExists(from, to, oldMatches) {
+function	checkMatchExists(from, to, oldMatches, newMatches) {
     var exists = false;
 
     if (oldMatches == null || oldMatches.length == 0 || oldMatches[0] == null)
@@ -92,6 +96,19 @@ function	checkMatchExists(from, to, oldMatches) {
       //console.log('match.toId: '+match.toId);
       //console.log('to.userId: '+to.userId);
       if (match.fromId.equals(from.userId) && match.toId.equals(to.userId))
+      {
+          exists = true;
+      }
+
+    })
+
+    newMatches.forEach(function(match2, i){
+      //console.log('New: '+from.userName+'->'+to.userName +' Old: '+match.fromName+'->'+match.toName);
+      //console.log('match.fromId: '+match.fromId);
+      //console.log('from.userId: '+from.userId);
+      //console.log('match.toId: '+match.toId);
+      //console.log('to.userId: '+to.userId);
+      if (match2.toId.equals(to.userId))
       {
           exists = true;
       }
