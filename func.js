@@ -61,7 +61,7 @@ var methods = {
 
     var data = {
       from: fromAddress,
-      bcc:process.env.MAILGUN_BCC,
+      /*bcc:process.env.MAILGUN_BCC,*/
       to: toEmail,
       subject: subject,
       text: body,
