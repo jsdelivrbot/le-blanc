@@ -100,6 +100,7 @@ app.post('/users/add', [
           console.log(err);
         }
         //console.log(result);
+        console.log('Attempting to send registration via email...');
         var emailSubject = 'Secret Santa - Registration';
         var emailBody = 'Dear '+newUser.first_name+' <br> Thank you for registering! <br>We will take it from here.<br> Yours sincerely,<br>Secret Santa';
         var emailHTMLBody = 'Dear '+newUser.first_name+' Thank you for registering! We will take it from here. Yours sincerely, Secret Santa';
